@@ -1,12 +1,18 @@
 import Joi from "joi";
 
+// export const addExpenseValidator = Joi.object({
+//     amount:Joi.string().required(),
+//     category:Joi.string().required(),
+//     date: Joi.string().required(),
+
+// });
+
+
 export const addExpenseValidator = Joi.object({
-    amount:Joi.string().required(),
-    category:Joi.string().required(),
-    date: Joi.string(). required(),
-
+    amount: Joi.number().required(),
+    category: Joi.string().required(),
+    date: Joi.date().required(),
 });
-
 export const updateExpenseValidator = Joi.object({
     amount:Joi.string().optional(),
     category:Joi.string().optional(),
@@ -14,7 +20,10 @@ export const updateExpenseValidator = Joi.object({
 });
 
 
+// export const expenseIdValidator = Joi.object({
+//     id: Joi.string().required(),
+// });
+
 export const expenseIdValidator = Joi.object({
     id: Joi.string().required(),
-});
-
+  });

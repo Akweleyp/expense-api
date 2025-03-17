@@ -1,3 +1,4 @@
+import { error } from "console";
 import { ExpenseModel } from "../models/expense.js";
 import {
   addExpenseValidator,
@@ -7,7 +8,7 @@ import {
 
 export const addExpense = async (req, res, next) => {
   try {
-    const { error, value } = addExpenseValidator.validate(req.params, {
+    const { error, value } = addExpenseValidator.validate(req.body, {
       abortEarly: false,
     });
     if (error) {
@@ -26,23 +27,45 @@ export const addExpense = async (req, res, next) => {
   }
 };
 
+// export const getExpenses = async (req, res, next) => {
+//   try {
+//     const { error, value } = expenseIdValidator.validate(req.params, {
+//       abortEarly: false,
+//     });
+//     if (error) {
+//       res.status(400).json(error);
+//     }
+//     const result = await ExpenseModel.findById(value.id);
+//     if (!result) {
+//       res.status(404).json({ message: "Expenses not found" });
+//     }
+//     res.status(201).json(result);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 export const getExpenses = async (req, res, next) => {
   try {
-    const { error, value } = expenseIdValidator.validate(req.params, {
-      abortEarly: false,
+    // Fetch all expenses from the database
+    const expenses = await ExpenseModel.find();
+
+    if (expenses.length === 0) {
+      return res.status(404).json({ message: "No expenses found" });
+    }
+
+    // Respond with all expenses
+    res.status(200).json({
+      message: "Expenses retrieved successfully",
+      data: expenses,
     });
-    if (error) {
-      res.status(400).json(error);
-    }
-    const result = await ExpenseModel.findById(value.id);
-    if (!result) {
-      res.status(404).json({ message: "Expenses not found" });
-    }
-    res.status(201).json(result);
   } catch (error) {
+    // Pass errors to error-handling middleware
     next(error);
   }
 };
+
+
 
 export const updateExpense = async (req, res, next) => {
   try {
@@ -69,9 +92,7 @@ export const updateExpense = async (req, res, next) => {
 
 export const deleteExpense = async (req, res, next) => {
   try {
-    const { error, value } = expenseIdValidator.validate(req.params, {
-      abortEarly: false,
-    });
+    const { error, value } = expenseIdValidator.validate(req.params, { abortEarly: false,});
     if (error) {
       res.status(400).json(error);
     }
