@@ -11,7 +11,7 @@ export const addExpense = async (req, res, next) => {
       abortEarly: false,
     });
     if (error) {
-      res.status(400), json(error);
+      res.status(400).json(error);
     }
     const result = await ExpenseModel.create(value);
     if (!result) {
@@ -32,7 +32,7 @@ export const getExpenses = async (req, res, next) => {
       abortEarly: false,
     });
     if (error) {
-      res.status(400), json(error);
+      res.status(400).json(error);
     }
     const result = await ExpenseModel.findById(value.id);
     if (!result) {
@@ -50,7 +50,7 @@ export const updateExpense = async (req, res, next) => {
       abortEarly: false,
     });
     if (error) {
-      res.status(400), json(error);
+      res.status(400).json(error);
     }
     const result = await ExpenseModel.findByIdAndUpdate(req.params.id, value, {
       new: true,
@@ -73,7 +73,7 @@ export const deleteExpense = async (req, res, next) => {
       abortEarly: false,
     });
     if (error) {
-      res.status(400), json(error);
+      res.status(400).json(error);
     }
     const result = await ExpenseModel.findById(value.id);
     if (!result) {
