@@ -106,9 +106,9 @@ try {
     return res.status(401).json({message: "Invalid email"})
   }
 
-  comparePassword = await bcrypt.compare(value.password, existingUser.password);
+ const  comparePassword = await bcrypt.compare(value.password, existingUser.password);
   if(!comparePassword){
     return res.status(401).json({message:"Invalid password"});
   }
   return res.status(201).json({message: "Login Successful"});
- }
+ };
