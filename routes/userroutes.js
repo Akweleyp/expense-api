@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import {deleteUser, getUser, updateUser} from "../controllers/usercontroller.js";
+import {deleteUser, getUser, loginUser, registerUser, updateUser} from "../controllers/usercontroller.js";
 
 //Create product router
 const userRouter = Router();
@@ -11,6 +11,8 @@ userRouter.get("/user", getUser);
 userRouter.patch("/user/:id", updateUser);
 
 userRouter.delete("/user/:id", deleteUser);
+userRouter.post('/users',registerUser);
+userRouter.post('/users/login', loginUser)
 
 // Export Router
 export default userRouter;
